@@ -1,0 +1,12 @@
+{
+  "name": "letstream",
+  "displayName": "letstream",
+  "expo": {
+    "name": "letstream",
+    "slug": "letstream",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
