@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import CheckBox from "@react-native-community/checkbox";
-import { StackNavigationProp } from "@react-navigation/stack";
 import LinkButton from "../../components/shared/buttons/LinkButton";
 import { colors } from "../../theme/colors";
 import textStyles from "../../theme/common/textStyles";
 import { large, regular, tiny } from "../../theme/metrics";
 import { Link } from "@react-navigation/native";
 import ActionButton from "../../components/shared/buttons/ActionButton";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Login"
+  "Signup"
 >;
 
-type Props = {
+type SignupViewProps = {
   navigation: ProfileScreenNavigationProp;
 };
-const LoginView = ({ navigation }: Props) => {
+
+const SignupView = ({ navigation }: SignupViewProps) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Sign-In</Text>
-      <LinkButton
-        title="Forgot password?"
-        containerStyle={styles.alignRight}
-        onPress={() => alert("clicked")}
-        type="small"
-      />
+      <Text style={styles.heading}>Sign up with your mobile number</Text>
       <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Name"
+          keyboardType="default"
+          placeholderTextColor="#999"
+          style={inputTextStyle}
+        />
         <TextInput
           placeholder="Email address"
           keyboardType="email-address"
@@ -57,36 +58,17 @@ const LoginView = ({ navigation }: Props) => {
       </View>
       <ActionButton
         onPress={() => alert("clicked")}
-        title="Sign-In"
+        title="Continue"
         style={styles.signinButton}
         android_ripple={{
           color: colors.orangeYello.light,
         }}
       />
-
-      <View style={styles.agreementContainer}>
-        <Text style={[textStyles.textRegular, { fontSize: 14 }]}>
-          By continuing, you agree to Letstream's{" "}
-        </Text>
-        <LinkButton title="Conditions of Use" onPress={() => console.log()} />
-        <Text style={[textStyles.textRegular, { fontSize: 14 }]}>
-          {` and `}
-        </Text>
-        <LinkButton onPress={() => alert("privacy")} title="Privacy Notice" />
-      </View>
-      <View style={styles.flexRow}>
-        <View style={styles.separatorLine}></View>
-        <Text style={styles.separatorText}>New to Letstream</Text>
-        <View style={styles.separatorLine}></View>
-      </View>
-
-      <ActionButton
-        onPress={() => navigation.navigate("Signup")}
-        title=" Create a new Letstream account"
-        style={newAccountButton}
-        android_ripple={{
-          color: colors.charcoal.dark,
-        }}
+      <LinkButton
+        onPress={() => navigation.navigate("Login")}
+        style={styles.linkContainer}
+        textStyle={styles.linkText}
+        title="Already have an account?"
       />
     </View>
   );
@@ -100,7 +82,6 @@ const styles = StyleSheet.create({
   },
   heading: {
     ...textStyles.textHeading3,
-    marginBottom: regular,
   },
   alignRight: {
     alignSelf: "flex-end",
@@ -113,9 +94,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.charcoal.light,
     height: 40,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.charcoal.regular,
+    borderColor: "#bbb",
     color: "#fff",
     paddingHorizontal: regular,
+    marginBottom: regular,
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -134,29 +116,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     elevation: 4,
   },
-  agreementContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginVertical: regular,
-    alignItems: "center",
+  linkContainer: {
+    marginTop: 8,
   },
-  flexRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: regular,
-  },
-  separatorLine: {
-    flex: 1,
-    backgroundColor: colors.charcoal.light,
-    height: 1,
-  },
-  separatorText: {
-    color: colors.charcoal.light,
-    fontSize: 12,
-    paddingHorizontal: tiny,
-  },
-  newAccount: {
-    backgroundColor: colors.charcoal.light,
+  linkText: {
+    textAlign: "center",
   },
 });
 
@@ -165,9 +129,4 @@ const inputTextStyle = StyleSheet.compose(
   styles.inputText as any
 );
 
-const newAccountButton = StyleSheet.compose(
-  styles.signinButton,
-  styles.newAccount
-);
-
-export default LoginView;
+export default SignupView;
